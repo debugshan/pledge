@@ -21,18 +21,18 @@ func Task() {
 	}
 
 	//init task
-	services.NewPool().UpdateAllPoolInfo()
-	services.NewTokenPrice().UpdateContractPrice()
-	services.NewTokenSymbol().UpdateContractSymbol()
-	services.NewTokenLogo().UpdateTokenLogo()
-	services.NewBalanceMonitor().Monitor()
+	services.NewPool().UpdateAllPoolInfo() //更新所有pool信息,从合约中获取最新数据
+	services.NewTokenPrice().UpdateContractPrice()  //更新合约价格
+	services.NewTokenSymbol().UpdateContractSymbol()  //更新合约symbol
+	services.NewTokenLogo().UpdateTokenLogo()  //
+	services.NewBalanceMonitor().Monitor()  //监控门限检查
 	// services.NewTokenPrice().SavePlgrPrice()
-	services.NewTokenPrice().SavePlgrPriceTestNet()
+	services.NewTokenPrice().SavePlgrPriceTestNet()  //设置测试网价格
 
 	//run pool task
 	s := gocron.NewScheduler()
 	s.ChangeLoc(time.UTC)
-	_ = s.Every(2).Minutes().From(gocron.NextTick()).Do(services.NewPool().UpdateAllPoolInfo)
+	_ = s.Every(2).Minutes().From(gocron.NextTick()).Do(services.NewPool().UpdateAllPoolInfo) 
 	_ = s.Every(1).Minute().From(gocron.NextTick()).Do(services.NewTokenPrice().UpdateContractPrice)
 	_ = s.Every(2).Hours().From(gocron.NextTick()).Do(services.NewTokenSymbol().UpdateContractSymbol)
 	_ = s.Every(2).Hours().From(gocron.NextTick()).Do(services.NewTokenLogo().UpdateTokenLogo)

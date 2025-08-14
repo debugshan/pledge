@@ -105,7 +105,7 @@ func (s *poolService) UpdatePoolInfo(contractAddress, network, chainId string) {
 		}
 
 		hasInfoData, byteBaseInfoStr, baseInfoMd5Str := s.GetPoolMd5(&poolBase, "base_info:pool_"+chainId+"_"+poolId)
-		if !hasInfoData || (baseInfoMd5Str != byteBaseInfoStr) { // have new data
+		if !hasInfoData || (baseInfoMd5Str != byteBaseInfoStr) { // have new data 数据更新重新保存
 			//tokenInfo
 			err = models.NewPoolBase().SavePoolBase(chainId, poolId, &poolBase)
 			if err != nil {
